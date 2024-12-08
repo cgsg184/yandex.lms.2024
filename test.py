@@ -28,9 +28,21 @@ class Suprematism(QWidget):
             self.qp.end()
 
     def draw(self, status):
-        R = random.randint(20, 100)
-        self.qp.setBrush(QColor(255, 255, 0))
-        self.qp.drawEllipse(QPointF(self.coords_[0], self.coords_[1]), R, R)
+        if status == 1:
+            R = random.randint(20, 100)
+            self.qp.setBrush(QColor(*[random.randint(0, 255) for _ in range(3)]))
+            self.qp.drawEllipse(QPointF(self.coords_[0], self.coords_[1]), R, R)
+        elif status == 2:
+            A = random.randint(20, 100)
+            self.qp.setBrush(QColor(*[random.randint(0, 255) for _ in range(3)]))
+            self.qp.drawRect(QRectF(self.coords_[0] - A / 2, self.coords_[1] - A / 2, A, A))
+        elif status == 3:
+            x, y = self.coords_
+            A = random.randint(20, 100)
+            coords = QPolygonF([QPointF(x, y - A), QPointF(x + cos(7 * pi / 6) * A, y - sin(7 * pi / 6) * A),
+                                QPointF(x + cos(11 * pi / 6) * A, y - sin(11 * pi / 6) * A)])
+            self.qp.setBrush(QColor(*[random.randint(0, 255) for _ in range(3)]))
+            self.qp.drawPolygon(coords)
 
     def initUI(self):
         self.setGeometry(300, 300, 1000, 1000)
